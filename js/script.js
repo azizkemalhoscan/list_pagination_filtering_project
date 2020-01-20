@@ -50,8 +50,13 @@ for(let i = 0; i < studentlist.length; i+=1){
 
 
 /***
-   Create the `appendPageLinks function` to generate, append, and add
-   functionality to the pagination buttons.
+   First selected main div where to append Items I am about to create.
+   Then created a<li<ul<div elements and appended to each other as childrens
+   I looped over li and a elements to make the code static
+   Then I added an eventlistener for clicking on buttons to change pages
+   Highlighting buttons were really tough :)
+   I looped thorugh all the a buttons removed their classnames and added active class
+   name to the one which is clicked or ttargeted
 ***/
 const numOfPages = Math.ceil(studentlist.length / showOnEachPage);
 
@@ -61,18 +66,29 @@ const appendPageLinks = (studentlist) => {
   paginationDiv.className = 'pagination';
   mainDiv.appendChild(paginationDiv);
   const paginationUl = document.createElement('ul');
+  paginationUl.className = 'paginationUl';
   paginationDiv.appendChild(paginationUl);
   for(let i = 0; i < numOfPages; i += 1 ){
     const paginationLi = document.createElement('li');
     const paginationA = document.createElement('a');
     paginationLi.appendChild(paginationA);
     paginationA.href = '#';
+    paginationA.className = 'active';
     paginationA.textContent = i + 1;
     paginationUl.appendChild(paginationLi);
 
     paginationA.addEventListener('click', (e) => {
-      paginationA.classList.remove('active');
-      e.target.className ='active';
+
+      const aTarget = document.querySelectorAll('a');
+      for(let i =0; i < aTarget.length; i +=1){
+        aTarget[i].className = "";
+        e.target.className = "active";
+
+      }
+
+     /*
+      What I did here is I arranged the index of people to be viewed on each page
+     */
       let page = parseInt(e.target.textContent);
       let minimumIndex = (page * 10) - 10;
       let maximumIndex = page * 10;
@@ -91,9 +107,7 @@ const appendPageLinks = (studentlist) => {
 
 
 appendPageLinks(studentlist);
-showPage(studentlist, page);
-
-
+showPage(studentlist, 1);
 
 
 // const mainDiv = document.getElementsByClassName('page');
